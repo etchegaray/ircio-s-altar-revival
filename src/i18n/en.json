@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "home": "Home",
+    "finances": "Campaign",
+    "shop": "Shop",
+    "events": "Events",
+    "admin": "Admin",
+    "login": "Login"
+  },
+  "hero": {
+    "title": "Restoration of the Ircio Altarpiece",
+    "subtitle": "Help us recover a jewel of 16th-century Spanish Renaissance art",
+    "cta_donate": "Donate",
+    "cta_shop": "Visit shop"
+  },
+  "home": {
+    "history_title": "History of the Altarpiece",
+    "history_text": "The main altarpiece of the parish of San Pedro in Ircio (Miranda de Ebro, Burgos) is a monumental work of the Spanish Renaissance. Of great proportions, it occupies the entire head of the church and constitutes one of the most important sculptural ensembles in the region.",
+    "history_text_2": "The work was begun by Pedro López de Gámiz, one of the most outstanding figures of Spanish Romanist sculpture, who received the commission in 1575. After his death without completing the work, it was continued by the Riojan artists Hernando de Murillas and Bernardo de Valderrama, who completed it in the early 17th century.",
+    "history_text_3": "The altarpiece presents a rich iconographic programme with scenes from the life of Christ and the Virgin, saints and allegorical figures, distributed across several tiers and sections with classical column and entablature architecture.",
+    "authors_title": "The Artists",
+    "author_gamiz": "Pedro López de Gámiz — Master sculptor from Miranda, a key figure of Romanist sculpture. He began the altarpiece in 1575 with the main scenes and highest quality figures.",
+    "author_murillas": "Hernando de Murillas — Riojan sculptor who continued the work after Gámiz's death. He contributed reliefs and carvings of notable craftsmanship.",
+    "author_valderrama": "Bernardo de Valderrama — Murillas' collaborator, he completed the altarpiece's sculptural programme in the early decades of the 17th century.",
+    "state_title": "Current State",
+    "state_text": "After more than four centuries, the altarpiece needs urgent restoration. Time, humidity and other environmental factors have deteriorated both the structure and the original polychrome. The restoration will allow this masterpiece to be returned to its original splendour and ensure its conservation for future generations.",
+    "importance_title": "Artistic Importance",
+    "importance_text": "The Ircio altarpiece is a fundamental piece of Spanish artistic heritage. Its strategic location, on the border of the province of Burgos with La Rioja, places it at the crossroads of two important 16th-century artistic centres: Miranda de Ebro and Briones. The quality of the sculpture, especially the pieces attributed to López de Gámiz, makes it a benchmark of Romanist sculpture in Spain.",
+    "importance_text_2": "From its position on a small hill, the parish of San Pedro overlooks much of the Riojan Alavese bank and the entrance to La Rioja through the Conchas de Haro, adding exceptional landscape and cultural value to the whole."
+  },
+  "finances": {
+    "title": "Financial Status",
+    "subtitle": "Full transparency in the management of the restoration campaign",
+    "goal": "Goal",
+    "raised": "Raised",
+    "remaining": "Remaining",
+    "donations": "Donations",
+    "expenses": "Expenses",
+    "date": "Date",
+    "amount": "Amount",
+    "description": "Description",
+    "donor": "Donor",
+    "category": "Category"
+  },
+  "shop": {
+    "title": "Charity Shop",
+    "subtitle": "All proceeds go towards the restoration of the altarpiece",
+    "buy": "Buy",
+    "price": "Price"
+  },
+  "events": {
+    "title": "Events Calendar",
+    "subtitle": "Activities and events related to the restoration",
+    "register": "Register",
+    "registered": "Registered",
+    "attendees": "Attendees",
+    "location": "Location",
+    "name": "Name",
+    "email": "Email",
+    "register_submit": "Confirm registration",
+    "registration_success": "You have been successfully registered!"
+  },
+  "footer": {
+    "description": "Campaign for the restoration of the main altarpiece of the parish of San Pedro in Ircio, Miranda de Ebro (Burgos).",
+    "links": "Links",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  },
+  "language": {
+    "es": "Español",
+    "en": "English",
+    "eu": "Euskara"
+  }
+}

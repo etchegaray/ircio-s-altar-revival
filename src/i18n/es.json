@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "finances": "Situación",
+    "shop": "Tienda",
+    "events": "Eventos",
+    "admin": "Administración",
+    "login": "Acceder"
+  },
+  "hero": {
+    "title": "Restauración del Retablo Mayor de Ircio",
+    "subtitle": "Ayúdanos a recuperar una joya del Renacimiento español del siglo XVI",
+    "cta_donate": "Colaborar",
+    "cta_shop": "Visitar tienda"
+  },
+  "home": {
+    "history_title": "Historia del Retablo",
+    "history_text": "El retablo mayor de la parroquia de San Pedro en Ircio (Miranda de Ebro, Burgos) es una obra monumental del Renacimiento español. De grandes proporciones, ocupa toda la cabecera de la iglesia y constituye uno de los conjuntos escultóricos más importantes de la región.",
+    "history_text_2": "La obra fue iniciada por Pedro López de Gámiz, una de las personalidades más relevantes de la escultura romanista española, quien recibió el encargo en 1575. Tras su fallecimiento sin haber completado la obra, fue continuada por los artistas riojanos Hernando de Murillas y Bernardo de Valderrama, quienes la concluyeron a principios del siglo XVII.",
+    "history_text_3": "El retablo presenta un rico programa iconográfico con escenas de la vida de Cristo y la Virgen, santos y figuras alegóricas, distribuidos en varios cuerpos y calles con una arquitectura de columnas y entablamentos clásicos.",
+    "authors_title": "Los Autores",
+    "author_gamiz": "Pedro López de Gámiz — Maestro escultor mirandés, figura clave de la escultura romanista. Inició el retablo en 1575 con las escenas principales y las figuras de mayor calidad.",
+    "author_murillas": "Hernando de Murillas — Escultor riojano que continuó la obra tras la muerte de Gámiz. Aportó relieves y tallas de notable factura.",
+    "author_valderrama": "Bernardo de Valderrama — Colaborador de Murillas, completó el programa escultórico del retablo en las primeras décadas del siglo XVII.",
+    "state_title": "Estado Actual",
+    "state_text": "Tras más de cuatro siglos, el retablo necesita una intervención urgente de restauración. El paso del tiempo, la humedad y otros factores ambientales han deteriorado tanto la estructura como la policromía original. La restauración permitirá devolver a esta obra maestra su esplendor original y garantizar su conservación para las futuras generaciones.",
+    "importance_title": "Importancia Artística",
+    "importance_text": "El retablo de Ircio es una pieza fundamental del patrimonio artístico español. Su ubicación estratégica, en el límite de la provincia de Burgos con La Rioja, lo sitúa en la encrucijada de dos importantes centros artísticos del siglo XVI: Miranda de Ebro y Briones. La calidad de la escultura, especialmente las piezas atribuidas a López de Gámiz, lo convierte en un referente de la escultura romanista en España.",
+    "importance_text_2": "Desde su emplazamiento sobre un pequeño alto, la parroquia de San Pedro domina gran parte de la Ribera Alavesa y la entrada a La Rioja por las Conchas de Haro, lo que añade un valor paisajístico y cultural excepcional al conjunto."
+  },
+  "finances": {
+    "title": "Situación Financiera",
+    "subtitle": "Transparencia total en la gestión de la campaña de restauración",
+    "goal": "Objetivo",
+    "raised": "Recaudado",
+    "remaining": "Restante",
+    "donations": "Donativos",
+    "expenses": "Gastos",
+    "date": "Fecha",
+    "amount": "Importe",
+    "description": "Descripción",
+    "donor": "Donante",
+    "category": "Categoría"
+  },
+  "shop": {
+    "title": "Tienda Solidaria",
+    "subtitle": "Todos los beneficios se destinan a la restauración del retablo",
+    "buy": "Comprar",
+    "price": "Precio"
+  },
+  "events": {
+    "title": "Calendario de Eventos",
+    "subtitle": "Actividades y actos relacionados con la restauración",
+    "register": "Inscribirse",
+    "registered": "Inscrito",
+    "attendees": "Asistentes",
+    "location": "Lugar",
+    "name": "Nombre",
+    "email": "Email",
+    "register_submit": "Confirmar inscripción",
+    "registration_success": "¡Te has inscrito correctamente!"
+  },
+  "footer": {
+    "description": "Campaña para la restauración del retablo mayor de la parroquia de San Pedro en Ircio, Miranda de Ebro (Burgos).",
+    "links": "Enlaces",
+    "contact": "Contacto",
+    "rights": "Todos los derechos reservados."
+  },
+  "language": {
+    "es": "Español",
+    "en": "English",
+    "eu": "Euskara"
+  }
+}
