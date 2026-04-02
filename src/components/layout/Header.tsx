@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogIn, LogOut, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from './LanguageSwitcher';
+import { useAuth } from '@/hooks/useAuth';
 
 const Header = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user, isAdmin, signOut } = useAuth();
 
   const navItems = [
     { path: '/', label: t('nav.home') },
@@ -41,10 +43,34 @@ const Header = () => {
               {item.label}
             </Link>
           ))}
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 ${
+                location.pathname.startsWith('/admin') ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              <Shield className="h-3.5 w-3.5" />
+              {t('nav.admin')}
+            </Link>
+          )}
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
           <LanguageSwitcher />
+          {user ? (
+            <Button variant="ghost" size="sm" onClick={signOut}>
+              <LogOut className="h-4 w-4 mr-1" />
+              {t('nav.logout')}
+            </Button>
+          ) : (
+            <Link to="/auth">
+              <Button variant="ghost" size="sm">
+                <LogIn className="h-4 w-4 mr-1" />
+                {t('nav.login')}
+              </Button>
+            </Link>
+          )}
         </div>
 
         {/* Mobile toggle */}
@@ -73,8 +99,33 @@ const Header = () => {
               {item.label}
             </Link>
           ))}
-          <div className="pt-2">
+          {isAdmin && (
+            <Link
+              to="/admin"
+              onClick={() => setMobileOpen(false)}
+              className={`block text-sm font-medium py-2 transition-colors hover:text-primary flex items-center gap-1 ${
+                location.pathname.startsWith('/admin') ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              <Shield className="h-3.5 w-3.5" />
+              {t('nav.admin')}
+            </Link>
+          )}
+          <div className="pt-2 flex items-center gap-3">
             <LanguageSwitcher />
+            {user ? (
+              <Button variant="ghost" size="sm" onClick={signOut}>
+                <LogOut className="h-4 w-4 mr-1" />
+                {t('nav.logout')}
+              </Button>
+            ) : (
+              <Link to="/auth" onClick={() => setMobileOpen(false)}>
+                <Button variant="ghost" size="sm">
+                  <LogIn className="h-4 w-4 mr-1" />
+                  {t('nav.login')}
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       )}

@@ -8,6 +8,9 @@ import Index from "./pages/Index";
 import Finances from "./pages/Finances";
 import Shop from "./pages/Shop";
 import Events from "./pages/Events";
+import Auth from "./pages/Auth";
+import Admin from "./pages/Admin";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +26,8 @@ const App = () => (
           <Route path="/finances" element={<Finances />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

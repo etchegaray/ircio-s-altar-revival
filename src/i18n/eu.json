@@ -5,7 +5,8 @@
     "shop": "Denda",
     "events": "Ekitaldiak",
     "admin": "Kudeaketa",
-    "login": "Sartu"
+    "login": "Sartu",
+    "logout": "Irten"
   },
   "hero": {
     "title": "Ircio-ko Erretaula Nagusiaren Zaharberrikuntza",
@@ -59,6 +60,20 @@
     "email": "Emaila",
     "register_submit": "Izen-ematea berretsi",
     "registration_success": "Izen-ematea ondo egin da!"
+  },
+  "auth": {
+    "login_title": "Kudeaketa Sarbidea",
+    "email": "Posta elektronikoa",
+    "password": "Pasahitza",
+    "login": "Saioa hasi",
+    "error": "Autentifikazio errorea",
+    "access_denied": "Sarbidea ukatua"
+  },
+  "admin": {
+    "dashboard": "Kudeaketa Panela",
+    "finances_desc": "Kanpainako dohaintzak eta gastuak kudeatu",
+    "shop_desc": "Denda solidarioko produktuak kudeatu",
+    "events_desc": "Ekitaldiak kudeatu eta izen-emateak ikusi"
   },
   "footer": {
     "description": "Ircio-ko San Pedro parrokiako erretaula nagusiaren zaharberrikuntza kanpaina, Miranda de Ebro (Burgos).",

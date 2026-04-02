@@ -14,16 +14,212 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      campaign_settings: {
+        Row: {
+          campaign_name: string
+          created_at: string
+          goal_amount: number
+          id: string
+        }
+        Insert: {
+          campaign_name?: string
+          created_at?: string
+          goal_amount?: number
+          id?: string
+        }
+        Update: {
+          campaign_name?: string
+          created_at?: string
+          goal_amount?: number
+          id?: string
+        }
+        Relationships: []
+      }
+      donations: {
+        Row: {
+          amount: number
+          created_at: string
+          date: string
+          description: string | null
+          donor_name: string | null
+          id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          date?: string
+          description?: string | null
+          donor_name?: string | null
+          id?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          date?: string
+          description?: string | null
+          donor_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      event_registrations: {
+        Row: {
+          created_at: string
+          email: string
+          event_id: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          event_id: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          event_id?: string
+          id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_registrations_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          created_at: string
+          date: string
+          description: string | null
+          id: string
+          location: string | null
+          max_attendees: number | null
+          time: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          description?: string | null
+          id?: string
+          location?: string | null
+          max_attendees?: number | null
+          time?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          description?: string | null
+          id?: string
+          location?: string | null
+          max_attendees?: number | null
+          time?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      expenses: {
+        Row: {
+          amount: number
+          category: string | null
+          created_at: string
+          date: string
+          description: string | null
+          id: string
+        }
+        Insert: {
+          amount: number
+          category?: string | null
+          created_at?: string
+          date?: string
+          description?: string | null
+          id?: string
+        }
+        Update: {
+          amount?: number
+          category?: string | null
+          created_at?: string
+          date?: string
+          description?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          active: boolean
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          stripe_price_id: string | null
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price: number
+          stripe_price_id?: string | null
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          stripe_price_id?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +346,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
