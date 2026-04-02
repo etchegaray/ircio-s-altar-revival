@@ -1,144 +1,80 @@
 
 
-# Plan: Sitio Web para la Restauración del Retablo de Ircio
+# Fase 2: Base de datos, autenticación y sistema de roles
 
-## Resumen del Proyecto
+## Resumen
 
-Sitio web trilingue (ES/EN/EU) para promover la restauración del retablo mayor de la parroquia de San Pedro en Ircio (Miranda de Ebro, Burgos). Retablo renacentista del siglo XVI, obra de Pedro Lopez de Gamiz, Hernando de Murillas y Bernardo de Valderrama. Estilo visual calido con colores tierra.
-
----
-
-## Arquitectura General
-
-```text
-┌─────────────────────────────────────────────┐
-│                 Frontend (React)            │
-│  Home | Financiero | Tienda | Eventos       │
-│  + Panel Admin (rutas protegidas)           │
-├─────────────────────────────────────────────┤
-│              Supabase (externo)             │
-│  Auth | Database | Storage                  │
-├─────────────────────────────────────────────┤
-│          Stripe (checkout sessions)         │
-└─────────────────────────────────────────────┘
-```
+Crear todas las tablas en Supabase, configurar RLS, implementar autenticación de admin (login por email/password), y proteger rutas de administración.
 
 ---
 
-## Secciones del Sitio
+## 1. Migración SQL — Crear esquema completo
 
-### 1. Home
-- Hero con imagen del retablo (la foto subida)
-- Introduccion historica (contenido extraido del PDF: autores, siglo XVI, escultura romanista)
-- Estado actual y necesidad de restauracion
-- Importancia artistica e historica
-- Llamada a la accion (donar / ver tienda)
+Una única migración que crea:
 
-### 2. Situacion Financiera
-- Barra de progreso visual (recaudado vs objetivo)
-- Tabla de ingresos (donativos) y gastos
-- Graficos sencillos de evolucion
-- Solo lectura para visitantes; editable por admin
+**Enum y tablas:**
+- `app_role` enum (`admin`, `user`)
+- `user_roles` (id, user_id, role) — con RLS
+- `campaign_settings` (id, goal_amount, campaign_name, created_at)
+- `donations` (id, amount, donor_name, description, date, created_at)
+- `expenses` (id, amount, description, category, date, created_at)
+- `products` (id, name, description, price, image_url, stripe_price_id, active, created_at)
+- `events` (id, title, description, date, time, location, max_attendees, created_at)
+- `event_registrations` (id, event_id, name, email, created_at)
 
-### 3. Tienda (Merchandising)
-- Catalogo de productos (libro, camiseta, gorra, etc.)
-- Integracion con Stripe en modo test
-- Flujo: seleccionar producto → Stripe Checkout → confirmacion
-- Gestion de productos desde panel admin
+**Función security definer:**
+- `has_role(user_id, role)` — para verificar roles sin recursión en RLS
 
-### 4. Calendario de Eventos
-- Vista de calendario atractiva con tarjetas de eventos
-- Inscripcion de visitantes (nombre + email)
-- Gestion de eventos desde panel admin
+**Políticas RLS:**
+- Tablas públicas (donations, expenses, products, events, event_registrations, campaign_settings): SELECT para todos (`anon` + `authenticated`)
+- INSERT/UPDATE/DELETE en donations, expenses, products, events, campaign_settings: solo admin via `has_role()`
+- event_registrations: INSERT público (para inscripciones), DELETE solo admin
 
 ---
 
-## Base de Datos (Supabase)
+## 2. Página de Login (`/auth`)
 
-Tablas necesarias:
-
-- **donations** (id, amount, donor_name, description, date, created_at)
-- **expenses** (id, amount, description, category, date, created_at)
-- **products** (id, name, description, price, image_url, stripe_price_id, active, created_at)
-- **events** (id, title, description, date, time, location, max_attendees, created_at)
-- **event_registrations** (id, event_id, name, email, created_at)
-- **user_roles** (id, user_id, role) — enum: admin, user
-- **campaign_settings** (id, goal_amount, campaign_name)
-
-RLS habilitado en todas las tablas. Funcion `has_role()` como security definer para verificar admin sin recursion.
+- Formulario simple de email + password (solo para admins, no registro público)
+- Usa `supabase.auth.signInWithPassword()`
+- Redirige al panel admin tras login exitoso
+- Traducciones i18n para los textos del formulario
 
 ---
 
-## Internacionalizacion (i18n)
+## 3. Hook `useAuth`
 
-- Libreria: `react-i18next`
-- 3 archivos de traducciones: `es.json`, `en.json`, `eu.json`
-- Selector de idioma en el header
-- Contenido historico traducido a los 3 idiomas
-
----
-
-## Estilo Visual
-
-- Paleta calida: tonos tierra (#8B6914 dorado antiguo, #D4A574 arena, #5C4033 marron, #F5E6D3 crema, #2F4F2F verde oliva)
-- Tipografia serif para titulos (Playfair Display), sans-serif para cuerpo (Inter)
-- Imagenes del retablo como protagonistas
-- Diseno responsive
+- `src/hooks/useAuth.ts`
+- Gestiona sesión con `onAuthStateChange` + `getSession`
+- Expone: `user`, `isAdmin`, `loading`, `signIn`, `signOut`
+- Consulta `user_roles` para determinar si es admin
 
 ---
 
-## Estructura de Archivos (principales)
+## 4. Componente `ProtectedRoute`
 
-```text
-src/
-├── i18n/              # Configuracion i18n + traducciones
-├── pages/
-│   ├── Index.tsx       # Home
-│   ├── Finances.tsx    # Situacion financiera
-│   ├── Shop.tsx        # Tienda
-│   ├── Events.tsx      # Calendario
-│   ├── Auth.tsx        # Login admin
-│   └── admin/
-│       ├── Dashboard.tsx
-│       ├── FinancesAdmin.tsx
-│       ├── ProductsAdmin.tsx
-│       └── EventsAdmin.tsx
-├── components/
-│   ├── layout/         # Header, Footer, LanguageSwitcher
-│   ├── home/           # Hero, History, Importance
-│   ├── finances/       # ProgressBar, TransactionsTable
-│   ├── shop/           # ProductCard, Cart
-│   ├── events/         # EventCard, Calendar, RegistrationForm
-│   └── admin/          # Forms para CRUD
-├── hooks/              # useAuth, useTranslation wrappers
-└── lib/
-    ├── supabase.ts     # Cliente Supabase
-    └── stripe.ts       # Helpers Stripe
-```
+- Wrapper que verifica `isAdmin` antes de renderizar rutas admin
+- Redirige a `/auth` si no autenticado o no admin
 
 ---
 
-## Plan de Implementacion
+## 5. Rutas de administración
 
-Se implementara en fases incrementales:
-
-**Fase 1**: Estructura base, layout, i18n, pagina Home con contenido del retablo e imagen
-
-**Fase 2**: Conexion Supabase, autenticacion, sistema de roles, tablas y RLS
-
-**Fase 3**: Seccion financiera (publica + admin CRUD)
-
-**Fase 4**: Tienda con Stripe (catalogo, checkout, admin productos)
-
-**Fase 5**: Calendario de eventos con inscripcion + admin
+- `/admin` — Dashboard básico (placeholder para fases 3-5)
+- Enlace "Administración" visible en header solo si el usuario es admin
+- Botón login/logout en header
 
 ---
 
-## Requisitos del Usuario
+## 6. Traducciones i18n
 
-Antes de implementar necesitare:
+Añadir claves de auth/admin en los 3 idiomas (es, en, eu):
+- Login, logout, email, password, panel admin, acceso denegado
 
-1. **Conectar Supabase externo** — te pedire la conexion
-2. **Conectar Stripe** — para la tienda (modo test)
-3. Las tablas se crearan via migraciones SQL
+---
+
+## Detalle técnico
+
+- No se crea tabla `profiles` — no se necesitan datos de perfil adicionales, solo roles
+- El primer admin se creará manualmente: crear usuario en Supabase Auth dashboard, luego insertar fila en `user_roles`
+- Las tablas financieras y de productos quedan vacías, listas para las fases 3-5
 
