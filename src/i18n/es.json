@@ -5,7 +5,8 @@
     "shop": "Tienda",
     "events": "Eventos",
     "admin": "Administración",
-    "login": "Acceder"
+    "login": "Acceder",
+    "logout": "Cerrar sesión"
   },
   "hero": {
     "title": "Restauración del Retablo Mayor de Ircio",
@@ -59,6 +60,20 @@
     "email": "Email",
     "register_submit": "Confirmar inscripción",
     "registration_success": "¡Te has inscrito correctamente!"
+  },
+  "auth": {
+    "login_title": "Acceso Administración",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "login": "Iniciar sesión",
+    "error": "Error de autenticación",
+    "access_denied": "Acceso denegado"
+  },
+  "admin": {
+    "dashboard": "Panel de Administración",
+    "finances_desc": "Gestionar donativos y gastos de la campaña",
+    "shop_desc": "Gestionar productos de la tienda solidaria",
+    "events_desc": "Gestionar eventos y ver inscripciones"
   },
   "footer": {
     "description": "Campaña para la restauración del retablo mayor de la parroquia de San Pedro en Ircio, Miranda de Ebro (Burgos).",

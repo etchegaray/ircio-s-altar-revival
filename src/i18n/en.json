@@ -5,7 +5,8 @@
     "shop": "Shop",
     "events": "Events",
     "admin": "Admin",
-    "login": "Login"
+    "login": "Login",
+    "logout": "Logout"
   },
   "hero": {
     "title": "Restoration of the Ircio Altarpiece",
@@ -59,6 +60,20 @@
     "email": "Email",
     "register_submit": "Confirm registration",
     "registration_success": "You have been successfully registered!"
+  },
+  "auth": {
+    "login_title": "Admin Login",
+    "email": "Email",
+    "password": "Password",
+    "login": "Sign in",
+    "error": "Authentication error",
+    "access_denied": "Access denied"
+  },
+  "admin": {
+    "dashboard": "Admin Dashboard",
+    "finances_desc": "Manage donations and expenses for the campaign",
+    "shop_desc": "Manage products in the charity shop",
+    "events_desc": "Manage events and view registrations"
   },
   "footer": {
     "description": "Campaign for the restoration of the main altarpiece of the parish of San Pedro in Ircio, Miranda de Ebro (Burgos).",
