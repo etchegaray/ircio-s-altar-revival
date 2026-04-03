@@ -73,7 +73,17 @@
     "dashboard": "Panel de Administración",
     "finances_desc": "Gestionar donativos y gastos de la campaña",
     "shop_desc": "Gestionar productos de la tienda solidaria",
-    "events_desc": "Gestionar eventos y ver inscripciones"
+    "events_desc": "Gestionar eventos y ver inscripciones",
+    "finances_title": "Gestión Financiera",
+    "campaign_settings": "Configuración de la campaña",
+    "campaign_name": "Nombre de la campaña",
+    "save": "Guardar",
+    "saved": "Guardado correctamente",
+    "error": "Ha ocurrido un error",
+    "add": "Añadir",
+    "add_donation": "Añadir donativo",
+    "add_expense": "Añadir gasto",
+    "deleted": "Eliminado correctamente"
   },
   "footer": {
     "description": "Campaña para la restauración del retablo mayor de la parroquia de San Pedro en Ircio, Miranda de Ebro (Burgos).",
