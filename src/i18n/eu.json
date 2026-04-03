@@ -73,7 +73,17 @@
     "dashboard": "Kudeaketa Panela",
     "finances_desc": "Kanpainako dohaintzak eta gastuak kudeatu",
     "shop_desc": "Denda solidarioko produktuak kudeatu",
-    "events_desc": "Ekitaldiak kudeatu eta izen-emateak ikusi"
+    "events_desc": "Ekitaldiak kudeatu eta izen-emateak ikusi",
+    "finances_title": "Finantza Kudeaketa",
+    "campaign_settings": "Kanpainaren konfigurazioa",
+    "campaign_name": "Kanpainaren izena",
+    "save": "Gorde",
+    "saved": "Ondo gorde da",
+    "error": "Errorea gertatu da",
+    "add": "Gehitu",
+    "add_donation": "Dohaintza gehitu",
+    "add_expense": "Gastua gehitu",
+    "deleted": "Ondo ezabatu da"
   },
   "footer": {
     "description": "Ircio-ko San Pedro parrokiako erretaula nagusiaren zaharberrikuntza kanpaina, Miranda de Ebro (Burgos).",
