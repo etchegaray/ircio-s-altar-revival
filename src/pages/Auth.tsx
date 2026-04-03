@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/hooks/useAuth';
 import Layout from '@/components/layout/Layout';
@@ -11,12 +11,26 @@ import { useToast } from '@/hooks/use-toast';
 
 const Auth = () => {
   const { t } = useTranslation();
-  const { signIn } = useAuth();
+  const { user, isAdmin, loading: authLoading, signIn } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  if (authLoading) {
+    return (
+      <Layout>
+        <div className="container mx-auto flex items-center justify-center min-h-[60vh]">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+        </div>
+      </Layout>
+    );
+  }
+
+  if (user && isAdmin) {
+    return <Navigate to="/admin" replace />;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
