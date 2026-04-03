@@ -10,6 +10,7 @@ import Shop from "./pages/Shop";
 import Events from "./pages/Events";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
+import AdminFinances from "./pages/AdminFinances";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
