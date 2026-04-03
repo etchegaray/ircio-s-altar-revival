@@ -41,7 +41,8 @@
     "amount": "Zenbatekoa",
     "description": "Deskribapena",
     "donor": "Emailea",
-    "category": "Kategoria"
+    "category": "Kategoria",
+    "no_data": "Oraindik ez dago daturik"
   },
   "shop": {
     "title": "Denda Solidarioa",

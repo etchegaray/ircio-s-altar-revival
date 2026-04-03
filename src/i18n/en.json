@@ -41,7 +41,8 @@
     "amount": "Amount",
     "description": "Description",
     "donor": "Donor",
-    "category": "Category"
+    "category": "Category",
+    "no_data": "No data recorded yet"
   },
   "shop": {
     "title": "Charity Shop",

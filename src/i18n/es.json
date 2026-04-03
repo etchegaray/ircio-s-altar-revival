@@ -41,7 +41,8 @@
     "amount": "Importe",
     "description": "Descripción",
     "donor": "Donante",
-    "category": "Categoría"
+    "category": "Categoría",
+    "no_data": "Aún no hay datos registrados"
   },
   "shop": {
     "title": "Tienda Solidaria",
