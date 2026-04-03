@@ -73,7 +73,17 @@
     "dashboard": "Admin Dashboard",
     "finances_desc": "Manage donations and expenses for the campaign",
     "shop_desc": "Manage products in the charity shop",
-    "events_desc": "Manage events and view registrations"
+    "events_desc": "Manage events and view registrations",
+    "finances_title": "Financial Management",
+    "campaign_settings": "Campaign settings",
+    "campaign_name": "Campaign name",
+    "save": "Save",
+    "saved": "Saved successfully",
+    "error": "An error occurred",
+    "add": "Add",
+    "add_donation": "Add donation",
+    "add_expense": "Add expense",
+    "deleted": "Deleted successfully"
   },
   "footer": {
     "description": "Campaign for the restoration of the main altarpiece of the parish of San Pedro in Ircio, Miranda de Ebro (Burgos).",
