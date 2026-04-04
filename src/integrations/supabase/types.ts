@@ -154,6 +154,71 @@ export type Database = {
         }
         Relationships: []
       }
+      orders: {
+        Row: {
+          created_at: string
+          customer_email: string
+          customer_name: string
+          customer_phone: string | null
+          id: string
+          notes: string | null
+          product_id: string | null
+          product_name: string
+          product_price: number
+          quantity: number
+          shipping_address: string
+          shipping_city: string
+          shipping_postal_code: string
+          shipping_province: string | null
+          status: string
+          total_amount: number
+        }
+        Insert: {
+          created_at?: string
+          customer_email: string
+          customer_name: string
+          customer_phone?: string | null
+          id?: string
+          notes?: string | null
+          product_id?: string | null
+          product_name: string
+          product_price: number
+          quantity?: number
+          shipping_address: string
+          shipping_city: string
+          shipping_postal_code: string
+          shipping_province?: string | null
+          status?: string
+          total_amount: number
+        }
+        Update: {
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string | null
+          id?: string
+          notes?: string | null
+          product_id?: string | null
+          product_name?: string
+          product_price?: number
+          quantity?: number
+          shipping_address?: string
+          shipping_city?: string
+          shipping_postal_code?: string
+          shipping_province?: string | null
+          status?: string
+          total_amount?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           active: boolean
@@ -184,6 +249,24 @@ export type Database = {
           name?: string
           price?: number
           stripe_price_id?: string | null
+        }
+        Relationships: []
+      }
+      shop_settings: {
+        Row: {
+          created_at: string
+          id: string
+          notification_email: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notification_email?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notification_email?: string
         }
         Relationships: []
       }
