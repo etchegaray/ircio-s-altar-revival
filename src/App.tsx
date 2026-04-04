@@ -11,6 +11,7 @@ import Events from "./pages/Events";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import AdminFinances from "./pages/AdminFinances";
+import AdminShop from "./pages/AdminShop";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
