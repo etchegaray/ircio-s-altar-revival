@@ -39,11 +39,7 @@ const Auth = () => {
     setLoading(false);
 
     if (error) {
-      toast({
-        title: t('auth.error'),
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error(error.message);
     } else {
       navigate('/admin');
     }
