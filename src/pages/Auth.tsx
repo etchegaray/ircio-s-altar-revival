@@ -7,13 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 const Auth = () => {
   const { t } = useTranslation();
   const { user, isAdmin, loading: authLoading, signIn } = useAuth();
   const navigate = useNavigate();
-  const { toast } = useToast();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -39,11 +39,7 @@ const Auth = () => {
     setLoading(false);
 
     if (error) {
-      toast({
-        title: t('auth.error'),
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast.error(error.message);
     } else {
       navigate('/admin');
     }
