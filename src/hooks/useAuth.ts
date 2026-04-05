@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -7,6 +7,7 @@ export const useAuth = () => {
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const isMounted = useRef(true);
 
   const checkAdminRole = useCallback(async (userId: string) => {
     const { data } = await supabase
@@ -15,33 +16,52 @@ export const useAuth = () => {
       .eq('user_id', userId)
       .eq('role', 'admin')
       .maybeSingle();
-    setIsAdmin(!!data);
+    if (isMounted.current) {
+      setIsAdmin(!!data);
+    }
+    return !!data;
   }, []);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          await checkAdminRole(session.user.id);
-        } else {
-          setIsAdmin(false);
-        }
-        setLoading(false);
-      }
-    );
+    isMounted.current = true;
 
+    // 1. Restore session from storage first
     supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!isMounted.current) return;
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
         await checkAdminRole(session.user.id);
       }
-      setLoading(false);
+      if (isMounted.current) {
+        setLoading(false);
+      }
     });
 
-    return () => subscription.unsubscribe();
+    // 2. Listen for subsequent auth changes (sign in/out) — don't await inside
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (!isMounted.current) return;
+        setSession(session);
+        setUser(session?.user ?? null);
+        if (!session?.user) {
+          setIsAdmin(false);
+          setLoading(false);
+          return;
+        }
+        // Fire and forget — don't block the callback
+        checkAdminRole(session.user.id).then(() => {
+          if (isMounted.current) {
+            setLoading(false);
+          }
+        });
+      }
+    );
+
+    return () => {
+      isMounted.current = false;
+      subscription.unsubscribe();
+    };
   }, [checkAdminRole]);
 
   const signIn = async (email: string, password: string) => {
