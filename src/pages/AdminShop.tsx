@@ -48,9 +48,9 @@ const AdminShop = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['shop_settings'] });
-      toast({ title: t('admin.saved') });
+      toast.success(t('admin.saved'));
     },
-    onError: () => toast({ title: t('admin.error'), variant: 'destructive' }),
+    onError: () => toast.error(t('admin.error')),
   });
 
   // Products
@@ -80,9 +80,9 @@ const AdminShop = () => {
       queryClient.invalidateQueries({ queryKey: ['admin_products'] });
       setNewProduct({ name: '', description: '', price: '', image_url: '' });
       setAddDialogOpen(false);
-      toast({ title: t('admin.saved') });
+      toast.success(t('admin.saved'));
     },
-    onError: () => toast({ title: t('admin.error'), variant: 'destructive' }),
+    onError: () => toast.error(t('admin.error')),
   });
 
   const toggleProduct = useMutation({
@@ -100,9 +100,9 @@ const AdminShop = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin_products'] });
-      toast({ title: t('admin.deleted') });
+      toast.success(t('admin.deleted'));
     },
-    onError: () => toast({ title: t('admin.error'), variant: 'destructive' }),
+    onError: () => toast.error(t('admin.error')),
   });
 
   // Orders
