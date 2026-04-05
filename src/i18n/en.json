@@ -62,7 +62,9 @@
     "notes": "Notes or comments",
     "total": "Total",
     "confirm_order": "Confirm order",
-    "order_success": "Order placed! We will contact you soon.",
+    "pay_now": "Pay now",
+    "order_success": "Payment completed! Your order has been registered.",
+    "payment_cancelled": "Payment was cancelled.",
     "no_products": "Products will be added to the shop soon.",
     "product_name": "Product name",
     "image_url": "Image URL"
