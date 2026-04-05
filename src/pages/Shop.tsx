@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,8 +10,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
-import { ShoppingBag, Package } from 'lucide-react';
+import { toast } from 'sonner';
+import { ShoppingBag, Package, CheckCircle } from 'lucide-react';
 
 interface Product {
   id: string;
@@ -47,9 +48,21 @@ const emptyForm: OrderForm = {
 
 const Shop = () => {
   const { t } = useTranslation();
-  const { toast } = useToast();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [form, setForm] = useState<OrderForm>(emptyForm);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  // Show success message if returning from Stripe
+  useEffect(() => {
+    if (searchParams.get('payment') === 'success') {
+      toast.success(t('shop.order_success'));
+      setSearchParams({}, { replace: true });
+    } else if (searchParams.get('payment') === 'cancelled') {
+      toast.error(t('shop.payment_cancelled'));
+      setSearchParams({}, { replace: true });
+    }
+  }, [searchParams, setSearchParams, t]);
 
   const { data: products = [] } = useQuery({
     queryKey: ['products'],
@@ -64,66 +77,46 @@ const Shop = () => {
     },
   });
 
-  const placeOrder = useMutation({
-    mutationFn: async () => {
-      if (!selectedProduct) return;
-      const totalAmount = selectedProduct.price * form.quantity;
-
-      const { error } = await supabase.from('orders').insert({
-        product_id: selectedProduct.id,
-        product_name: selectedProduct.name,
-        product_price: selectedProduct.price,
-        quantity: form.quantity,
-        total_amount: totalAmount,
-        customer_name: form.customer_name,
-        customer_email: form.customer_email,
-        customer_phone: form.customer_phone || null,
-        shipping_address: form.shipping_address,
-        shipping_city: form.shipping_city,
-        shipping_postal_code: form.shipping_postal_code,
-        shipping_province: form.shipping_province || null,
-        notes: form.notes || null,
-      });
-      if (error) throw error;
-
-      // Send notification email
-      try {
-        await supabase.functions.invoke('send-order-notification', {
-          body: {
-            product_name: selectedProduct.name,
-            product_price: selectedProduct.price,
-            quantity: form.quantity,
-            total_amount: totalAmount,
-            customer_name: form.customer_name,
-            customer_email: form.customer_email,
-            customer_phone: form.customer_phone,
-            shipping_address: form.shipping_address,
-            shipping_city: form.shipping_city,
-            shipping_postal_code: form.shipping_postal_code,
-            shipping_province: form.shipping_province,
-            notes: form.notes,
-          },
-        });
-      } catch (emailErr) {
-        console.error('Email notification failed:', emailErr);
-      }
-    },
-    onSuccess: () => {
-      toast({ title: t('shop.order_success') });
-      setSelectedProduct(null);
-      setForm(emptyForm);
-    },
-    onError: () => {
-      toast({ title: t('admin.error'), variant: 'destructive' });
-    },
-  });
-
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(amount);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    placeOrder.mutate();
+    if (!selectedProduct) return;
+
+    setIsProcessing(true);
+    try {
+      const origin = window.location.origin;
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: {
+          product_id: selectedProduct.id,
+          product_name: selectedProduct.name,
+          product_price: selectedProduct.price,
+          quantity: form.quantity,
+          customer_name: form.customer_name,
+          customer_email: form.customer_email,
+          customer_phone: form.customer_phone,
+          shipping_address: form.shipping_address,
+          shipping_city: form.shipping_city,
+          shipping_postal_code: form.shipping_postal_code,
+          shipping_province: form.shipping_province,
+          notes: form.notes,
+          success_url: `${origin}/shop?payment=success`,
+          cancel_url: `${origin}/shop?payment=cancelled`,
+        },
+      });
+
+      if (error) throw error;
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('No checkout URL returned');
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
+      toast.error(t('admin.error'));
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -240,8 +233,8 @@ const Shop = () => {
                 </div>
               )}
 
-              <Button type="submit" className="w-full" disabled={placeOrder.isPending}>
-                {placeOrder.isPending ? '...' : t('shop.confirm_order')}
+              <Button type="submit" className="w-full" disabled={isProcessing}>
+                {isProcessing ? '...' : t('shop.pay_now')}
               </Button>
             </form>
           </DialogContent>
