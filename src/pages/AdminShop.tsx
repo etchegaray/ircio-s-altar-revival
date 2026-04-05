@@ -18,24 +18,15 @@ import { Link } from 'react-router-dom';
 
 const AdminShop = () => {
   const { t } = useTranslation();
-  const { toast } = useToast();
   const queryClient = useQueryClient();
-
-  // Shop settings
-  const { data: shopSettings } = useQuery({
-    queryKey: ['shop_settings'],
-    queryFn: async () => {
-      const { data, error } = await supabase.from('shop_settings').select('*').limit(1).maybeSingle();
-      if (error) throw error;
-      return data;
-    },
-  });
-
   const [notificationEmail, setNotificationEmail] = useState('');
-  const emailLoaded = shopSettings && notificationEmail === '';
-  if (emailLoaded) {
-    setNotificationEmail(shopSettings.notification_email || '');
-  }
+
+  // Sync email from query data
+  useEffect(() => {
+    if (shopSettings?.notification_email !== undefined) {
+      setNotificationEmail(shopSettings.notification_email || '');
+    }
+  }, [shopSettings]);
 
   const saveSettings = useMutation({
     mutationFn: async () => {
