@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Layout from '@/components/layout/Layout';
@@ -12,13 +12,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Switch } from '@/components/ui/switch';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 import { ArrowLeft, Plus, Trash2, Mail, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AdminShop = () => {
   const { t } = useTranslation();
-  const { toast } = useToast();
   const queryClient = useQueryClient();
 
   // Shop settings
@@ -32,10 +31,13 @@ const AdminShop = () => {
   });
 
   const [notificationEmail, setNotificationEmail] = useState('');
-  const emailLoaded = shopSettings && notificationEmail === '';
-  if (emailLoaded) {
-    setNotificationEmail(shopSettings.notification_email || '');
-  }
+
+  // Sync email from query data
+  useEffect(() => {
+    if (shopSettings?.notification_email !== undefined) {
+      setNotificationEmail(shopSettings.notification_email || '');
+    }
+  }, [shopSettings]);
 
   const saveSettings = useMutation({
     mutationFn: async () => {
@@ -46,9 +48,9 @@ const AdminShop = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['shop_settings'] });
-      toast({ title: t('admin.saved') });
+      toast.success(t('admin.saved'));
     },
-    onError: () => toast({ title: t('admin.error'), variant: 'destructive' }),
+    onError: () => toast.error(t('admin.error')),
   });
 
   // Products
@@ -78,9 +80,9 @@ const AdminShop = () => {
       queryClient.invalidateQueries({ queryKey: ['admin_products'] });
       setNewProduct({ name: '', description: '', price: '', image_url: '' });
       setAddDialogOpen(false);
-      toast({ title: t('admin.saved') });
+      toast.success(t('admin.saved'));
     },
-    onError: () => toast({ title: t('admin.error'), variant: 'destructive' }),
+    onError: () => toast.error(t('admin.error')),
   });
 
   const toggleProduct = useMutation({
@@ -98,9 +100,9 @@ const AdminShop = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin_products'] });
-      toast({ title: t('admin.deleted') });
+      toast.success(t('admin.deleted'));
     },
-    onError: () => toast({ title: t('admin.error'), variant: 'destructive' }),
+    onError: () => toast.error(t('admin.error')),
   });
 
   // Orders
