@@ -19,6 +19,17 @@ import { Link } from 'react-router-dom';
 const AdminShop = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
+
+  // Shop settings
+  const { data: shopSettings } = useQuery({
+    queryKey: ['shop_settings'],
+    queryFn: async () => {
+      const { data, error } = await supabase.from('shop_settings').select('*').limit(1).maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const [notificationEmail, setNotificationEmail] = useState('');
 
   // Sync email from query data
