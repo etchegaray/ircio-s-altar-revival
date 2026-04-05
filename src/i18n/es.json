@@ -62,7 +62,9 @@
     "notes": "Notas o comentarios",
     "total": "Total",
     "confirm_order": "Confirmar encargo",
-    "order_success": "¡Encargo realizado! Nos pondremos en contacto contigo pronto.",
+    "pay_now": "Pagar ahora",
+    "order_success": "¡Pago completado! Tu pedido ha sido registrado.",
+    "payment_cancelled": "El pago ha sido cancelado.",
     "no_products": "Próximamente añadiremos productos a la tienda solidaria.",
     "product_name": "Nombre del producto",
     "image_url": "URL de la imagen"
