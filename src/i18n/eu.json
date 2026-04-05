@@ -62,7 +62,9 @@
     "notes": "Oharrak edo iruzkinak",
     "total": "Guztira",
     "confirm_order": "Eskaera berretsi",
-    "order_success": "Eskaera eginda! Laster jarriko gara zurekin harremanetan.",
+    "pay_now": "Ordaindu orain",
+    "order_success": "Ordainketa osatuta! Zure eskaera erregistratu da.",
+    "payment_cancelled": "Ordainketa bertan behera utzi da.",
     "no_products": "Laster produktuak gehituko ditugu denda solidarioan.",
     "product_name": "Produktuaren izena",
     "image_url": "Irudiaren URLa"
