@@ -108,7 +108,22 @@ const Shop = () => {
 
       if (error) throw error;
       if (data?.url) {
-        window.location.href = data.url;
+        // Open Stripe Checkout outside iframe to avoid grey screen
+        const newWindow = window.open(data.url, '_blank', 'noopener,noreferrer');
+        if (!newWindow) {
+          // Popup blocked — try top-level navigation
+          try {
+            if (window.top && window.top !== window.self) {
+              window.top.location.href = data.url;
+            } else {
+              window.location.href = data.url;
+            }
+          } catch {
+            window.location.href = data.url;
+          }
+        }
+        setIsProcessing(false);
+        setSelectedProduct(null);
       } else {
         throw new Error('No checkout URL returned');
       }
