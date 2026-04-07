@@ -190,7 +190,7 @@ Deno.serve(async (req) => {
 </body>
 </html>`;
 
-            await fetch(`${GATEWAY_URL}/emails`, {
+            const custRes = await fetch(`${GATEWAY_URL}/emails`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -204,7 +204,12 @@ Deno.serve(async (req) => {
                 html: customerHtml,
               }),
             });
-            console.log("Customer confirmation email sent to:", meta.customer_email);
+            const custBody = await custRes.text();
+            if (!custRes.ok) {
+              console.error("Customer email failed:", custRes.status, custBody);
+            } else {
+              console.log("Customer confirmation email sent to:", meta.customer_email);
+            }
           }
         }
       } catch (emailErr) {
