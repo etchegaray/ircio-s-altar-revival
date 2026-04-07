@@ -1,41 +1,60 @@
 
+Objetivo: arreglar de una vez el post-pago para que, tras pagar en Stripe, se hagan las 3 acciones: guardar el pedido en `orders`, enviar email al encargado y enviar email al cliente.
 
-## Plan: Corregir persistencia de pedidos y añadir emails de confirmación
+Diagnóstico confirmado
+- Ya no parece fallar el checkout: el pago sí se inicia y Stripe funciona.
+- El bloqueo real está en `supabase/functions/stripe-webhook/index.ts`.
+- Los logs muestran el error exacto:
+  ```text
+  SubtleCryptoProvider cannot be used in a synchronous context.
+  Use `await constructEventAsync(...)` instead of `constructEvent(...)`
+  ```
+- Ahora mismo el webhook usa `stripe.webhooks.constructEvent(...)`, así que revienta antes de:
+  1. insertar en `orders`
+  2. leer `shop_settings.notification_email`
+  3. enviar los 2 correos
 
-### Problema
+Qué voy a corregir
+1. Arreglar la validación del webhook de Stripe
+- En `supabase/functions/stripe-webhook/index.ts`, cambiar:
+  - `stripe.webhooks.constructEvent(...)`
+  - por `await stripe.webhooks.constructEventAsync(...)`
+- Esto es lo crítico: permitirá que el webhook procese realmente el evento `checkout.session.completed`.
 
-El webhook de Stripe (`stripe-webhook`) no tiene logs, lo que indica que **no está desplegado** o Stripe no lo está llamando. El código del webhook ya tiene la lógica correcta para insertar en `orders` y enviar email al encargado, pero nunca se ejecuta.
+2. Hacer más robusto el guardado del pedido
+- Mantener la inserción en `orders`, pero añadir validaciones y logs más claros antes y después del insert.
+- Comprobar que los campos sacados de `session.metadata` se convierten bien:
+  - `product_price`
+  - `quantity`
+  - `total_amount`
+- Si falta algún dato obligatorio, responder con log explícito en vez de fallar silenciosamente.
 
-Además, falta el envío de email de confirmación al cliente.
+3. Asegurar los dos envíos de correo
+- Mantener el email al encargado leyendo `shop_settings.notification_email`.
+- Mantener el email al cliente usando `meta.customer_email`.
+- Mejorar control de errores de cada envío por separado para que:
+  - si falla un correo, el pedido siga guardándose
+  - quede registrado en logs cuál de los dos falló
+- Verificar también la respuesta del gateway de email, no solo hacer `fetch(...)` sin comprobar `response.ok`.
 
-### Acciones
+4. Simplificar el flujo para evitar puntos muertos
+- El archivo `send-order-notification` existe, pero el flujo real del pago no lo usa.
+- La corrección principal seguirá en `stripe-webhook`, para que todo ocurra en un único punto tras el pago confirmado.
+- No hace falta tocar la UI de la tienda para resolver este fallo.
 
-**1. Desplegar las Edge Functions**
-- Desplegar `stripe-webhook` y `create-checkout` (y `send-order-notification` si existe).
-- El webhook debe desplegarse con `--no-verify-jwt` ya que Stripe lo llama directamente sin token JWT.
+5. Verificación después del cambio
+- Hacer una prueba completa de compra y comprobar:
+  - que aparece una fila nueva en `orders`
+  - que llega el correo al email configurado en `shop_settings`
+  - que llega el correo de confirmación al comprador
+- Si algo siguiera fallando, el siguiente punto de verdad serán los logs del webhook, que ya deberían mostrar errores útiles y no el fallo criptográfico actual.
 
-**2. Añadir email de confirmación al cliente**
-- En `stripe-webhook/index.ts`, después de enviar el email al encargado, enviar un segundo email al `customer_email` con los detalles de su pedido (producto, cantidad, total, dirección de envío).
-- Se usará el mismo mecanismo de Resend vía el gateway.
+Archivos a tocar
+- `supabase/functions/stripe-webhook/index.ts`
 
-**3. Verificar la URL del webhook en Stripe**
-- La URL del webhook en Stripe debe apuntar a:
-  `https://gqakeutnqwkqqynamgxy.supabase.co/functions/v1/stripe-webhook`
-- Confirmar con el usuario que esta URL está configurada correctamente en el panel de Stripe.
-
-### Archivos a modificar
-- `supabase/functions/stripe-webhook/index.ts` — añadir email de confirmación al cliente
-
-### Detalles técnicos
-
-El webhook ya:
-- Verifica la firma con `STRIPE_WEBHOOK_SECRET`
-- Inserta el pedido en `orders` con `SUPABASE_SERVICE_ROLE_KEY` (bypassa RLS)
-- Envía email al encargado via Resend gateway
-
-Lo que falta:
-- Despliegue de la función
-- Email al cliente con template HTML de confirmación de pedido
-
-El email al cliente incluirá: nombre del producto, cantidad, total, dirección de envío, y un mensaje de agradecimiento.
-
+Resultado esperado
+- Stripe confirma el pago
+- El webhook deja de romperse al verificar la firma
+- Se registra el pedido en la tabla `orders`
+- Se envía correo al encargado
+- Se envía correo al cliente
