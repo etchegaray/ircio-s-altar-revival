@@ -28,7 +28,7 @@ Deno.serve(async (req) => {
     
     let event: Stripe.Event;
     if (STRIPE_WEBHOOK_SECRET && sig) {
-      event = stripe.webhooks.constructEvent(body, sig, STRIPE_WEBHOOK_SECRET);
+      event = await stripe.webhooks.constructEventAsync(body, sig, STRIPE_WEBHOOK_SECRET);
     } else {
       event = JSON.parse(body);
     }
@@ -40,6 +40,16 @@ Deno.serve(async (req) => {
       const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
       const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
       const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
+      console.log("Processing checkout.session.completed for:", meta.customer_email, "Product:", meta.product_name);
+
+      // Validate required metadata
+      if (!meta.product_name || !meta.customer_name || !meta.customer_email || !meta.shipping_address || !meta.shipping_city || !meta.shipping_postal_code) {
+        console.error("Missing required metadata:", JSON.stringify(meta));
+        return new Response(JSON.stringify({ error: "Missing required order metadata" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
 
       // Insert order
       const { error: orderError } = await supabase.from("orders").insert({
@@ -60,7 +70,9 @@ Deno.serve(async (req) => {
       });
 
       if (orderError) {
-        console.error("Error inserting order:", orderError);
+        console.error("Error inserting order:", JSON.stringify(orderError));
+      } else {
+        console.log("Order saved successfully for:", meta.customer_email);
       }
 
       // Send notification email
@@ -118,7 +130,7 @@ Deno.serve(async (req) => {
 </body>
 </html>`;
 
-            await fetch(`${GATEWAY_URL}/emails`, {
+            const adminRes = await fetch(`${GATEWAY_URL}/emails`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -132,7 +144,12 @@ Deno.serve(async (req) => {
                 html,
               }),
             });
-            console.log("Admin notification email sent to:", notificationEmail);
+            const adminBody = await adminRes.text();
+            if (!adminRes.ok) {
+              console.error("Admin email failed:", adminRes.status, adminBody);
+            } else {
+              console.log("Admin notification email sent to:", notificationEmail);
+            }
           }
 
           // Send confirmation email to customer
@@ -173,7 +190,7 @@ Deno.serve(async (req) => {
 </body>
 </html>`;
 
-            await fetch(`${GATEWAY_URL}/emails`, {
+            const custRes = await fetch(`${GATEWAY_URL}/emails`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -187,7 +204,12 @@ Deno.serve(async (req) => {
                 html: customerHtml,
               }),
             });
-            console.log("Customer confirmation email sent to:", meta.customer_email);
+            const custBody = await custRes.text();
+            if (!custRes.ok) {
+              console.error("Customer email failed:", custRes.status, custBody);
+            } else {
+              console.log("Customer confirmation email sent to:", meta.customer_email);
+            }
           }
         }
       } catch (emailErr) {
