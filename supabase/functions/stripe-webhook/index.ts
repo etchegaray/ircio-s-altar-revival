@@ -70,7 +70,9 @@ Deno.serve(async (req) => {
       });
 
       if (orderError) {
-        console.error("Error inserting order:", orderError);
+        console.error("Error inserting order:", JSON.stringify(orderError));
+      } else {
+        console.log("Order saved successfully for:", meta.customer_email);
       }
 
       // Send notification email
