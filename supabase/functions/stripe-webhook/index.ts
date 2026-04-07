@@ -130,7 +130,7 @@ Deno.serve(async (req) => {
 </body>
 </html>`;
 
-            await fetch(`${GATEWAY_URL}/emails`, {
+            const adminRes = await fetch(`${GATEWAY_URL}/emails`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -144,7 +144,12 @@ Deno.serve(async (req) => {
                 html,
               }),
             });
-            console.log("Admin notification email sent to:", notificationEmail);
+            const adminBody = await adminRes.text();
+            if (!adminRes.ok) {
+              console.error("Admin email failed:", adminRes.status, adminBody);
+            } else {
+              console.log("Admin notification email sent to:", notificationEmail);
+            }
           }
 
           // Send confirmation email to customer
