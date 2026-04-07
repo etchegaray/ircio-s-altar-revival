@@ -28,7 +28,7 @@ Deno.serve(async (req) => {
     
     let event: Stripe.Event;
     if (STRIPE_WEBHOOK_SECRET && sig) {
-      event = stripe.webhooks.constructEvent(body, sig, STRIPE_WEBHOOK_SECRET);
+      event = await stripe.webhooks.constructEventAsync(body, sig, STRIPE_WEBHOOK_SECRET);
     } else {
       event = JSON.parse(body);
     }
