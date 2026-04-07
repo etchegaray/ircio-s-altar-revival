@@ -132,6 +132,62 @@ Deno.serve(async (req) => {
                 html,
               }),
             });
+            console.log("Admin notification email sent to:", notificationEmail);
+          }
+
+          // Send confirmation email to customer
+          if (meta.customer_email) {
+            const customerHtml = `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+  <h1 style="color: #8B6914; border-bottom: 2px solid #8B6914; padding-bottom: 10px;">
+    ¡Gracias por tu pedido! 🎉
+  </h1>
+  <p>Hola <strong>${meta.customer_name}</strong>,</p>
+  <p>Hemos recibido tu pedido correctamente y el pago ha sido confirmado. A continuación tienes los detalles:</p>
+
+  <h2 style="color: #555;">Resumen del Pedido</h2>
+  <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Producto:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${meta.product_name}</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Cantidad:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${meta.quantity}</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Precio unitario:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${Number(meta.product_price).toFixed(2)} €</td></tr>
+    <tr><td style="padding: 8px; border-bottom: 2px solid #8B6914; font-weight: bold; font-size: 1.1em;">Total:</td><td style="padding: 8px; border-bottom: 2px solid #8B6914; font-size: 1.1em; font-weight: bold; color: #8B6914;">${Number(meta.total_amount).toFixed(2)} €</td></tr>
+  </table>
+
+  <h2 style="color: #555;">Dirección de Envío</h2>
+  <p style="background: #f9f7f2; padding: 12px; border-radius: 8px;">
+    ${meta.shipping_address}<br>
+    ${meta.shipping_postal_code} ${meta.shipping_city}<br>
+    ${meta.shipping_province ? meta.shipping_province : ''}
+  </p>
+
+  <p style="margin-top: 20px;">Te avisaremos cuando tu pedido sea enviado. Si tienes alguna pregunta, no dudes en contactarnos.</p>
+
+  <p style="margin-top: 30px;">¡Gracias por apoyar la restauración del Retablo de Ircio!</p>
+
+  <p style="color: #999; font-size: 12px; margin-top: 30px; border-top: 1px solid #eee; padding-top: 10px;">
+    Este correo fue generado automáticamente por el sitio web del Retablo de Ircio.
+  </p>
+</body>
+</html>`;
+
+            await fetch(`${GATEWAY_URL}/emails`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${LOVABLE_API_KEY}`,
+                "X-Connection-Api-Key": RESEND_API_KEY,
+              },
+              body: JSON.stringify({
+                from: "Retablo de Ircio <onboarding@resend.dev>",
+                to: [meta.customer_email],
+                subject: `✅ Confirmación de pedido: ${meta.product_name}`,
+                html: customerHtml,
+              }),
+            });
+            console.log("Customer confirmation email sent to:", meta.customer_email);
           }
         }
       } catch (emailErr) {
