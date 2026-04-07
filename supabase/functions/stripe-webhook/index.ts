@@ -41,6 +41,16 @@ Deno.serve(async (req) => {
       const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
       const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
+      console.log("Processing checkout.session.completed for:", meta.customer_email, "Product:", meta.product_name);
+
+      // Validate required metadata
+      if (!meta.product_name || !meta.customer_name || !meta.customer_email || !meta.shipping_address || !meta.shipping_city || !meta.shipping_postal_code) {
+        console.error("Missing required metadata:", JSON.stringify(meta));
+        return new Response(JSON.stringify({ error: "Missing required order metadata" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+
       // Insert order
       const { error: orderError } = await supabase.from("orders").insert({
         product_id: meta.product_id || null,
