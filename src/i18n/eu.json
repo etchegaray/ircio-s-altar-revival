@@ -79,7 +79,9 @@
     "name": "Izena",
     "email": "Emaila",
     "register_submit": "Izen-ematea berretsi",
-    "registration_success": "Izen-ematea ondo egin da!"
+    "registration_success": "Izen-ematea ondo egin da!",
+    "no_events": "Ez dago ekitaldirik",
+    "full": "Beteta"
   },
   "auth": {
     "login_title": "Kudeaketa Sarbidea",
@@ -111,7 +113,13 @@
     "products": "Produktuak",
     "orders": "Eskaerak",
     "active": "Aktiboa",
-    "status": "Egoera"
+    "status": "Egoera",
+    "events_title": "Ekitaldien Kudeaketa",
+    "add_event": "Ekitaldia gehitu",
+    "edit_event": "Ekitaldia editatu",
+    "registrations": "Izen-emateak",
+    "view_registrations": "Izen-emateak ikusi",
+    "no_registrations": "Ez dago izen-ematerik ekitaldi honetarako"
   },
   "footer": {
     "description": "Ircio-ko San Pedro parrokiako erretaula nagusiaren zaharberrikuntza kanpaina, Miranda de Ebro (Burgos).",

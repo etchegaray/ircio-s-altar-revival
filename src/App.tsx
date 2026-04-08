@@ -12,6 +12,7 @@ import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import AdminFinances from "./pages/AdminFinances";
 import AdminShop from "./pages/AdminShop";
+import AdminEvents from "./pages/AdminEvents";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           <Route path="/admin/finances" element={<ProtectedRoute><AdminFinances /></ProtectedRoute>} />
           <Route path="/admin/shop" element={<ProtectedRoute><AdminShop /></ProtectedRoute>} />
+          <Route path="/admin/events" element={<ProtectedRoute><AdminEvents /></ProtectedRoute>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

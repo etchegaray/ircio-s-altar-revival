@@ -79,7 +79,9 @@
     "name": "Name",
     "email": "Email",
     "register_submit": "Confirm registration",
-    "registration_success": "You have been successfully registered!"
+    "registration_success": "You have been successfully registered!",
+    "no_events": "No upcoming events",
+    "full": "Full"
   },
   "auth": {
     "login_title": "Admin Login",
@@ -111,7 +113,13 @@
     "products": "Products",
     "orders": "Orders",
     "active": "Active",
-    "status": "Status"
+    "status": "Status",
+    "events_title": "Events Management",
+    "add_event": "Add event",
+    "edit_event": "Edit event",
+    "registrations": "Registrations",
+    "view_registrations": "View registrations",
+    "no_registrations": "No registrations for this event"
   },
   "footer": {
     "description": "Campaign for the restoration of the main altarpiece of the parish of San Pedro in Ircio, Miranda de Ebro (Burgos).",

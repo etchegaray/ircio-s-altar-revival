@@ -79,7 +79,9 @@
     "name": "Nombre",
     "email": "Email",
     "register_submit": "Confirmar inscripción",
-    "registration_success": "¡Te has inscrito correctamente!"
+    "registration_success": "¡Te has inscrito correctamente!",
+    "no_events": "No hay eventos próximos",
+    "full": "Completo"
   },
   "auth": {
     "login_title": "Acceso Administración",
@@ -111,7 +113,13 @@
     "products": "Productos",
     "orders": "Pedidos",
     "active": "Activo",
-    "status": "Estado"
+    "status": "Estado",
+    "events_title": "Gestión de Eventos",
+    "add_event": "Añadir evento",
+    "edit_event": "Editar evento",
+    "registrations": "Inscripciones",
+    "view_registrations": "Ver inscripciones",
+    "no_registrations": "No hay inscripciones para este evento"
   },
   "footer": {
     "description": "Campaña para la restauración del retablo mayor de la parroquia de San Pedro en Ircio, Miranda de Ebro (Burgos).",
