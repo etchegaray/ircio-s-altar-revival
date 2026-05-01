@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 const languages = [
   { code: 'es', label: 'ES' },
   { code: 'en', label: 'EN' },
-  { code: 'eu', label: 'EU' },
 ];
 
 const LanguageSwitcher = () => {
