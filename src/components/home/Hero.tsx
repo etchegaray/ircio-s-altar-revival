@@ -27,7 +27,7 @@ const Hero = () => {
           </p>
           <div className="flex flex-wrap gap-4">
             <Button asChild size="lg" className="text-base">
-              <Link to="/finances">{t('hero.cta_donate')}</Link>
+              <Link to="/donations">{t('hero.cta_donate')}</Link>
             </Button>
             <Button asChild variant="outline" size="lg" className="text-base">
               <Link to="/shop">{t('hero.cta_shop')}</Link>

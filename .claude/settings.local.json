@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& \"C:\\\\Users\\\\javie\\\\.bun\\\\bin\\\\bun.exe\" run dev)",
+      "mcp__claude_ai_Supabase__deploy_edge_function"
+    ]
+  }
+}

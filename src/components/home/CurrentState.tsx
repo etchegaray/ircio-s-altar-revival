@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const CurrentState = () => {
   const { t } = useTranslation();
@@ -15,6 +17,11 @@ const CurrentState = () => {
           <p className="text-muted-foreground leading-relaxed text-lg">
             {t('home.state_text')}
           </p>
+          <div className="mt-8">
+            <Button asChild size="lg">
+              <Link to="/donations">{t('hero.cta_donate')}</Link>
+            </Button>
+          </div>
         </div>
       </div>
     </section>

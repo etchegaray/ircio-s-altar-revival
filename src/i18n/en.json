@@ -4,6 +4,7 @@
     "finances": "Campaign",
     "shop": "Shop",
     "events": "Events",
+    "donations": "Donate",
     "admin": "Admin",
     "login": "Login",
     "logout": "Logout"
@@ -120,6 +121,19 @@
     "registrations": "Registrations",
     "view_registrations": "View registrations",
     "no_registrations": "No registrations for this event"
+  },
+  "donations": {
+    "title": "Make a Donation",
+    "subtitle": "Your contribution directly supports the restoration of the altarpiece",
+    "form_title": "Donation details",
+    "amount": "Amount",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "email": "Email address",
+    "show_name_label": "I wish my name to appear in the list of donors",
+    "pay_button": "Proceed to payment",
+    "payment_success": "Thank you for your donation! Your contribution has been recorded.",
+    "payment_cancelled": "Payment was cancelled."
   },
   "footer": {
     "description": "Campaign for the restoration of the main altarpiece of the parish of San Pedro in Ircio, Miranda de Ebro (Burgos).",

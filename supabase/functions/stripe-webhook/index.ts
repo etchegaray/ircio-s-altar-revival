@@ -41,6 +41,27 @@ Deno.serve(async (req) => {
       const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
       const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
+      // Handle donation payments
+      if (meta.payment_type === "donation") {
+        console.log("Processing donation for:", meta.donor_email, "Amount:", meta.amount);
+        const donorName = meta.show_name === "true" ? meta.donor_name : "Anónimo";
+        const { error: donationError } = await supabase.from("donations").insert({
+          amount: parseFloat(meta.amount),
+          date: new Date().toISOString().split("T")[0],
+          donor_name: donorName,
+          description: "Donativo online vía Stripe",
+        });
+        if (donationError) {
+          console.error("Error inserting donation:", JSON.stringify(donationError));
+        } else {
+          console.log("Donation saved for:", donorName);
+        }
+        return new Response(JSON.stringify({ received: true }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 200,
+        });
+      }
+
       console.log("Processing checkout.session.completed for:", meta.customer_email, "Product:", meta.product_name);
 
       // Validate required metadata

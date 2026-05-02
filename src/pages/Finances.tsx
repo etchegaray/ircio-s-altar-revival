@@ -1,8 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -93,10 +95,15 @@ const Finances = () => {
 
         {/* Tables */}
         <Tabs defaultValue="donations" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto mb-6">
-            <TabsTrigger value="donations">{t('finances.donations')} ({donations.length})</TabsTrigger>
-            <TabsTrigger value="expenses">{t('finances.expenses')} ({expenses.length})</TabsTrigger>
-          </TabsList>
+          <div className="flex items-center justify-between mb-6 gap-4">
+            <TabsList className="grid grid-cols-2 max-w-md w-full">
+              <TabsTrigger value="donations">{t('finances.donations')} ({donations.length})</TabsTrigger>
+              <TabsTrigger value="expenses">{t('finances.expenses')} ({expenses.length})</TabsTrigger>
+            </TabsList>
+            <Button asChild>
+              <Link to="/donations">{t('hero.cta_donate')}</Link>
+            </Button>
+          </div>
 
           <TabsContent value="donations">
             <Card>

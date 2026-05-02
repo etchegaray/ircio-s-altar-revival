@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -60,7 +61,12 @@ const Events = () => {
   return (
     <Layout>
       <div className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold mb-4">{t('events.title')}</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-4xl font-bold">{t('events.title')}</h1>
+          <Button asChild>
+            <Link to="/donations">{t('hero.cta_donate')}</Link>
+          </Button>
+        </div>
         <p className="text-muted-foreground text-lg mb-10">{t('events.subtitle')}</p>
 
         {events.length === 0 ? (

@@ -17,6 +17,7 @@ const Header = () => {
     { path: '/finances', label: t('nav.finances') },
     { path: '/shop', label: t('nav.shop') },
     { path: '/events', label: t('nav.events') },
+    { path: '/donations', label: t('nav.donations') },
   ];
 
   const isActive = (path: string) => location.pathname === path;

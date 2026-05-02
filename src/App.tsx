@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Finances from "./pages/Finances";
 import Shop from "./pages/Shop";
 import Events from "./pages/Events";
+import Donations from "./pages/Donations";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import AdminFinances from "./pages/AdminFinances";
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/finances" element={<Finances />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/events" element={<Events />} />
+          <Route path="/donations" element={<Donations />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
           <Route path="/admin/finances" element={<ProtectedRoute><AdminFinances /></ProtectedRoute>} />

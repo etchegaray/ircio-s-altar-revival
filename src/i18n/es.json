@@ -4,6 +4,7 @@
     "finances": "Situación",
     "shop": "Tienda",
     "events": "Eventos",
+    "donations": "Donativos",
     "admin": "Administración",
     "login": "Acceder",
     "logout": "Cerrar sesión"
@@ -120,6 +121,19 @@
     "registrations": "Inscripciones",
     "view_registrations": "Ver inscripciones",
     "no_registrations": "No hay inscripciones para este evento"
+  },
+  "donations": {
+    "title": "Hacer un Donativo",
+    "subtitle": "Tu aportación contribuye directamente a la restauración del retablo",
+    "form_title": "Datos del donativo",
+    "amount": "Importe",
+    "first_name": "Nombre",
+    "last_name": "Apellidos",
+    "email": "Correo electrónico",
+    "show_name_label": "Deseo que mi nombre aparezca en la lista de donantes",
+    "pay_button": "Proceder al pago",
+    "payment_success": "¡Gracias por tu donativo! Tu aportación ha sido registrada.",
+    "payment_cancelled": "El pago ha sido cancelado."
   },
   "footer": {
     "description": "Campaña para la restauración del retablo mayor de la parroquia de San Pedro en Ircio, Miranda de Ebro (Burgos).",

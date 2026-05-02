@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const Importance = () => {
   const { t } = useTranslation();
@@ -14,6 +16,11 @@ const Importance = () => {
         <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
           <p>{t('home.importance_text')}</p>
           <p>{t('home.importance_text_2')}</p>
+        </div>
+        <div className="mt-8">
+          <Button asChild size="lg">
+            <Link to="/donations">{t('hero.cta_donate')}</Link>
+          </Button>
         </div>
       </div>
     </section>
