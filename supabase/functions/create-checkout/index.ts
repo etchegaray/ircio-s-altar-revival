@@ -50,7 +50,7 @@ Deno.serve(async (req) => {
     const totalAmount = Math.round(product_price * quantity * 100); // cents
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+      payment_method_types: ["card", "bizum"],
       mode: "payment",
       customer_email: customer_email,
       line_items: [
