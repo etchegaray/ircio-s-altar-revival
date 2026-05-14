@@ -11,7 +11,7 @@ const Hero = () => {
       <div className="absolute inset-0">
         <img
           src={retabloImg}
-          alt="Retablo mayor de Ircio"
+          alt="Retablo de San Pedro Apóstol de Ircio"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/30" />
