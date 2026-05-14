@@ -10,7 +10,7 @@
     "logout": "Cerrar sesión"
   },
   "hero": {
-    "title": "Restauración del Retablo Mayor de Ircio",
+    "title": "Restauración del Retablo de San Pedro Apóstol",
     "subtitle": "Ayúdanos a recuperar una joya del Renacimiento español del siglo XVI",
     "cta_donate": "Colaborar",
     "cta_shop": "Visitar tienda"
@@ -134,7 +134,7 @@
     "payment_cancelled": "El pago ha sido cancelado."
   },
   "footer": {
-    "description": "Campaña para la restauración del retablo mayor de la parroquia de San Pedro en Ircio, Miranda de Ebro (Burgos).",
+    "description": "Campaña para la restauración del retablo de San Pedro Apóstol de Ircio, Miranda de Ebro.",
     "links": "Enlaces",
     "contact": "Contacto",
     "rights": "Todos los derechos reservados."

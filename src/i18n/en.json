@@ -10,7 +10,7 @@
     "logout": "Logout"
   },
   "hero": {
-    "title": "Restoration of the Ircio Altarpiece",
+    "title": "Restoration of the San Pedro Apóstol Altarpiece",
     "subtitle": "Help us recover a jewel of 16th-century Spanish Renaissance art",
     "cta_donate": "Donate",
     "cta_shop": "Visit shop"
@@ -134,7 +134,7 @@
     "payment_cancelled": "Payment was cancelled."
   },
   "footer": {
-    "description": "Campaign for the restoration of the main altarpiece of the parish of San Pedro in Ircio, Miranda de Ebro (Burgos).",
+    "description": "Campaign for the restoration of the San Pedro Apóstol altarpiece of Ircio, Miranda de Ebro.",
     "links": "Links",
     "contact": "Contact",
     "rights": "All rights reserved."
