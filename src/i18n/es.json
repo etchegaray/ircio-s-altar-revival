@@ -10,7 +10,7 @@
     "logout": "Cerrar sesión"
   },
   "hero": {
-    "title": "Restauración del Retablo de San Pedro Apóstol",
+    "title": "Restauración del Retablo Mayor de Ircio",
     "subtitle": "Ayúdanos a recuperar una joya del Renacimiento español del siglo XVI",
     "cta_donate": "Colaborar",
     "cta_shop": "Visitar tienda"
@@ -18,10 +18,12 @@
   "home": {
     "history_title": "Historia del Retablo",
     "history_text": "El retablo de San Pedro Apóstol de Ircio (Miranda de Ebro) es una obra monumental del Renacimiento español. Ocupa toda la cabecera de la iglesia y constituye uno de los principales conjuntos escultóricos de la región.",
-    "history_text_2": "Fue iniciado en 1575 por Pedro López de Gámiz, figura clave del romanismo español. Tras su fallecimiento sin haberlo completado, los artistas riojanos Hernando de Murillas y Bernardo de Valderrama terminaron la obra a comienzos del siglo XVII.",
+    "history_text_2": "Fue iniciado en 1575 por Pedro López de Gámiz, figura clave del romanismo español. Tras su fallecimiento sin haberlo completado, los artistas riojanos Hernando ",
     "history_text_3": "El retablo presenta un rico programa iconográfico con escenas de la vida de Cristo y la Virgen, santos y figuras alegóricas, distribuidos en varios cuerpos y calles con una arquitectura de columnas y entablamentos clásicos.",
     "authors_title": "El problema",
     "author_gamiz": "Antes de volver a montarlo, se acometerá la limpieza de las imágenes y, si fuera posible, su restauración.",
+    "author_murillas": "Antes de volver a montarlo, se acometerá la limpieza de las imágenes y, si fuera posible, su restauración.",
+    "author_valderrama": "",
     "state_title": "El aliciente",
     "state_text": "Al desmontar el retablo, quedará a la vista nuevamente, después de 400 años, el retablo pintado en la pared que realizaron en el siglo XVI antes de poder costear el definitivo. Cuando se descubra, en función de la calidad y conservación de esta obra, se valorará la posibilidad de montar el retablo unos metros adelantado, para que pueda visitarse.",
     "importance_title": "Importancia Artística",
@@ -134,7 +136,7 @@
     "payment_cancelled": "El pago ha sido cancelado."
   },
   "footer": {
-    "description": "Campaña para la restauración del retablo de San Pedro Apóstol de Ircio, Miranda de Ebro.",
+    "description": "Campaña para la restauración del retablo mayor de la parroquia de San Pedro en Ircio, Miranda de Ebro (Burgos).",
     "links": "Enlaces",
     "contact": "Contacto",
     "rights": "Todos los derechos reservados."
