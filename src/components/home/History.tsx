@@ -21,15 +21,13 @@ const History = () => {
         <div className="mt-12">
           <h3 className="text-2xl font-bold mb-6">{t('home.authors_title')}</h3>
           <div className="grid gap-4">
-            {['author_gamiz', 'author_murillas', 'author_valderrama']
-              .filter(key => t(`home.${key}`))
-              .map((key) => (
-                <div key={key} className="bg-card border rounded-lg p-6">
-                  <p className="text-foreground leading-relaxed">
-                    {t(`home.${key}`)}
-                  </p>
-                </div>
-              ))}
+            {['author_gamiz', 'author_murillas', 'author_valderrama'].map((key) => (
+              <div key={key} className="bg-card border rounded-lg p-6">
+                <p className="text-foreground leading-relaxed">
+                  {t(`home.${key}`)}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
