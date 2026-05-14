@@ -9,7 +9,7 @@ const History = () => {
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center gap-3 mb-8">
           <BookOpen className="h-8 w-8 text-primary" />
-          <h2 className="text-3xl md:text-4xl font-bold">{t("home.history_title")}</h2>
+          <h2 className="text-3xl font-bold md:text-2xl">{t("home.history_title")}</h2>
         </div>
 
         <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
