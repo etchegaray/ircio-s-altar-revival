@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { BookOpen } from "lucide-react";
+import { BookOpen, AlertTriangle } from "lucide-react";
 
 const History = () => {
   const { t } = useTranslation();
@@ -19,10 +19,13 @@ const History = () => {
         </div>
 
         <div className="mt-12">
-          <h3 className="text-2xl font-bold mb-6">{t("home.authors_title")}</h3>
-          <div className="bg-card border rounded-lg p-6">
-            <p className="text-foreground leading-relaxed">{t("home.author_gamiz")}</p>
-            <p className="text-foreground leading-relaxed">{t("home.author_murillas")}</p>
+          <div className="flex items-center gap-3 mb-6">
+            <AlertTriangle className="h-8 w-8 text-primary" />
+            <h3 className="text-3xl font-bold md:text-2xl">{t("home.authors_title")}</h3>
+          </div>
+          <div className="space-y-6 text-muted-foreground leading-relaxed text-lg">
+            <p>{t("home.author_gamiz")}</p>
+            <p>{t("home.author_murillas")}</p>
           </div>
         </div>
       </div>
