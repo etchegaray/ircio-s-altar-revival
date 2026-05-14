@@ -12,7 +12,7 @@ const CurrentState = () => {
         <div className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-8">
             <Sparkles className="h-8 w-8 text-primary" />
-            <h2 className="text-3xl md:text-4xl font-bold">{t('home.state_title')}</h2>
+            <h2 className="text-3xl font-bold md:text-2xl">{t('home.state_title')}</h2>
           </div>
           <p className="text-muted-foreground leading-relaxed text-lg">
             {t('home.state_text')}
