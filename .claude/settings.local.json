@@ -2,7 +2,15 @@
   "permissions": {
     "allow": [
       "PowerShell(& \"C:\\\\Users\\\\javie\\\\.bun\\\\bin\\\\bun.exe\" run dev)",
-      "mcp__claude_ai_Supabase__deploy_edge_function"
+      "mcp__claude_ai_Supabase__deploy_edge_function",
+      "mcp__claude_ai_Supabase__apply_migration",
+      "mcp__claude_ai_Supabase__generate_typescript_types",
+      "mcp__claude_ai_Supabase__get_logs",
+      "mcp__claude_ai_Supabase__list_tables",
+      "mcp__claude_ai_Supabase__execute_sql",
+      "Bash(npx supabase *)",
+      "Bash(bun run *)",
+      "Bash(npx tsc *)"
     ]
   }
 }

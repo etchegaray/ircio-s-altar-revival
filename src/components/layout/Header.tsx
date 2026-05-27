@@ -5,6 +5,7 @@ import { Menu, X, LogIn, LogOut, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useAuth } from '@/hooks/useAuth';
+import CartSheet from '@/components/shop/CartSheet';
 
 const Header = () => {
   const { t } = useTranslation();
@@ -58,6 +59,7 @@ const Header = () => {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
+          <CartSheet />
           <LanguageSwitcher />
           {user ? (
             <Button variant="ghost" size="sm" onClick={signOut}>
@@ -113,6 +115,7 @@ const Header = () => {
             </Link>
           )}
           <div className="pt-2 flex items-center gap-3">
+            <CartSheet />
             <LanguageSwitcher />
             {user ? (
               <Button variant="ghost" size="sm" onClick={signOut}>

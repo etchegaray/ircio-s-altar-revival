@@ -1,11 +1,17 @@
 import Stripe from "https://esm.sh/stripe@14.21.0";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.101.1";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
 };
+
+interface CartItem {
+  product_id: string;
+  product_name: string;
+  product_price: number;
+  quantity: number;
+}
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -23,10 +29,7 @@ Deno.serve(async (req) => {
     });
 
     const {
-      product_id,
-      product_name,
-      product_price,
-      quantity,
+      items,
       customer_name,
       customer_email,
       customer_phone,
@@ -39,38 +42,40 @@ Deno.serve(async (req) => {
       cancel_url,
     } = await req.json();
 
-    // Validate required fields
-    if (!product_name || !product_price || !quantity || !customer_name || !customer_email || !shipping_address || !shipping_city || !shipping_postal_code) {
+    if (!items || !Array.isArray(items) || items.length === 0) {
       return new Response(
-        JSON.stringify({ error: "Missing required fields" }),
+        JSON.stringify({ error: "Missing or empty items array" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    const totalAmount = Math.round(product_price * quantity * 100); // cents
+    if (!customer_name || !customer_email || !shipping_address || !shipping_city || !shipping_postal_code) {
+      return new Response(
+        JSON.stringify({ error: "Missing required customer or shipping fields" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const totalAmount = items.reduce(
+      (sum: number, item: CartItem) => sum + item.product_price * item.quantity,
+      0
+    );
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card", "bizum"],
       mode: "payment",
-      customer_email: customer_email,
-      line_items: [
-        {
-          price_data: {
-            currency: "eur",
-            product_data: {
-              name: product_name,
-            },
-            unit_amount: Math.round(product_price * 100),
-          },
-          quantity: quantity,
+      customer_email,
+      line_items: items.map((item: CartItem) => ({
+        price_data: {
+          currency: "eur",
+          product_data: { name: item.product_name },
+          unit_amount: Math.round(item.product_price * 100),
         },
-      ],
+        quantity: item.quantity,
+      })),
       metadata: {
-        product_id: product_id || "",
-        product_name,
-        product_price: String(product_price),
-        quantity: String(quantity),
-        total_amount: String(product_price * quantity),
+        items_json: JSON.stringify(items),
+        total_amount: String(totalAmount),
         customer_name,
         customer_email,
         customer_phone: customer_phone || "",
